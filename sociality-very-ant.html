@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socialty, Very Ant. — 社会性ありあり〼 | FUSANO</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --accent: #C5E821;
+  --black: #111;
+  --white: #fff;
+  --gray: #999;
+  --midgray: #555;
+  --light: #f7f7f5;
+  --rule: rgba(0,0,0,0.08);
+  --font: 'Jost', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 48px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo {
+  font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; color: var(--black);
+}
+.nav-logo span { color: var(--gray); font-weight: 300; margin-left: 8px; }
+.nav-back {
+  font-size: 12px; letter-spacing: 0.06em; text-decoration: none; color: var(--gray);
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--black); }
+
+/* ═══ HERO ═══ */
+.hero {
+  padding: 152px 48px 80px;
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: center;
+}
+.hero-tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray);
+  margin-bottom: 24px; display: block;
+}
+.hero h1 {
+  font-size: clamp(38px, 5vw, 68px); font-weight: 700;
+  line-height: 1.06; letter-spacing: -0.015em; margin-bottom: 10px;
+}
+.hero-jp {
+  font-size: clamp(14px, 1.8vw, 20px); font-weight: 300; color: var(--midgray);
+  letter-spacing: 0.04em; margin-bottom: 36px;
+}
+.hero-main-copy {
+  font-size: 20px; font-weight: 400; color: var(--black);
+  line-height: 1.7; margin-bottom: 14px;
+}
+.hero-sub-copy {
+  font-size: 14px; font-weight: 300; color: var(--midgray);
+  line-height: 1.9; max-width: 480px;
+}
+.hero-img img { width: 100%; height: auto; }
+
+/* ═══ ANCHOR NAV ═══ */
+.anchor-nav {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 48px;
+}
+.anchor-nav ul {
+  max-width: 1160px; margin: 0 auto;
+  list-style: none; display: flex; gap: 0;
+}
+.anchor-nav li a {
+  display: block;
+  padding: 16px 28px 15px;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  text-decoration: none; color: var(--gray);
+  border-right: 1px solid var(--rule);
+  transition: color 0.2s, background 0.2s;
+}
+.anchor-nav li:first-child a { border-left: 1px solid var(--rule); }
+.anchor-nav li a:hover { color: var(--black); background: var(--light); }
+.accent-bar { width: 100%; height: 2px; background: var(--accent); }
+
+/* ═══ SECTION FRAME ═══ */
+.section {
+  max-width: 1160px; margin: 0 auto;
+  padding: 88px 48px;
+}
+.section-head {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 52px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.s-num { font-size: 10px; letter-spacing: 0.2em; color: var(--gray); text-transform: uppercase; }
+.s-title { font-size: 10px; letter-spacing: 0.2em; color: var(--gray); text-transform: uppercase; font-weight: 400; }
+
+/* ═══ CONCEPT ═══ */
+#concept .concept-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+}
+.concept-body p {
+  font-size: 15px; line-height: 2.15; color: #333; margin-bottom: 20px;
+}
+.concept-body p.lead {
+  font-size: 16px; font-weight: 500; color: var(--black); line-height: 1.9;
+}
+.concept-aside {
+  padding-top: 2px;
+}
+.pull {
+  font-size: 19px; font-weight: 300; line-height: 1.75; color: var(--black);
+  padding: 24px 0 24px 22px;
+  border-left: 2px solid var(--accent);
+  margin-bottom: 28px;
+}
+.concept-aside p {
+  font-size: 14px; line-height: 2.1; color: var(--midgray);
+  margin-bottom: 14px;
+}
+
+/* ═══ ARICO ═══ */
+#arico { background: var(--light); max-width: 100%; padding: 88px 0; }
+#arico .arico-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 48px;
+}
+#arico .section-head { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.arico-layout {
+  display: grid; grid-template-columns: 1fr 460px; gap: 80px; align-items: start;
+}
+.arico-text h3 {
+  font-size: 26px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px;
+}
+.arico-text h3 em { font-style: normal; color: var(--gray); font-weight: 300; }
+.arico-subtitle {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray);
+  margin-bottom: 32px; display: block;
+}
+.arico-text p {
+  font-size: 14px; line-height: 2.1; color: #444; margin-bottom: 16px;
+}
+.arico-core {
+  margin: 36px 0;
+  padding: 28px 28px;
+  border: 1px solid var(--rule);
+  background: var(--white);
+}
+.arico-core-main {
+  font-size: 18px; font-weight: 500; color: var(--black);
+  line-height: 1.6; margin-bottom: 8px;
+}
+.arico-core-sub {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray);
+  margin-bottom: 20px;
+}
+.arico-core-note {
+  font-size: 13px; color: var(--midgray); line-height: 1.85;
+  padding-top: 18px; border-top: 1px solid var(--rule);
+}
+.arico-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 28px;
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--black); text-decoration: none;
+  padding: 11px 26px;
+  border: 1px solid rgba(0,0,0,0.2);
+  transition: all 0.22s;
+}
+.arico-link:hover { background: var(--black); color: var(--white); }
+.arico-diagram { text-align: center; padding-top: 4px; }
+.arico-diagram img { width: 100%; height: auto; }
+.arico-diagram figcaption {
+  font-size: 11px; color: var(--gray); letter-spacing: 0.06em;
+  margin-top: 12px;
+}
+
+/* ═══ NEST ═══ */
+#nest .nest-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-bottom: 16px;
+}
+#nest .nest-grid-sub {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-bottom: 20px;
+}
+#nest img { width: 100%; height: auto; }
+.nest-caption {
+  font-size: 13px; line-height: 2; color: var(--midgray);
+  max-width: 680px;
+  padding-top: 4px;
+}
+
+/* ═══ SPECIES ═══ */
+#species .species-list {
+  display: flex; flex-direction: column; gap: 72px;
+}
+.sp {
+  display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start;
+}
+.sp-meta {}
+.sp-num {
+  font-size: 10px; letter-spacing: 0.18em; color: var(--gray); text-transform: uppercase;
+  margin-bottom: 14px; display: block;
+}
+.sp-name { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sp-latin { font-size: 12px; color: var(--gray); font-style: italic; margin-bottom: 20px; display: block; }
+.sp-desc { font-size: 13px; line-height: 2; color: var(--midgray); }
+.sp-images {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start;
+}
+.sp-images img {
+  flex: 1 1 180px;
+  width: auto; height: auto; max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  object-position: top;
+}
+.sp-images.wide img { flex: 1 1 240px; max-height: 320px; object-position: center; }
+
+.sp + .sp { padding-top: 72px; border-top: 1px solid var(--rule); }
+
+/* ═══ GALLERY ═══ */
+#gallery .gallery-grid {
+  columns: 3; gap: 12px;
+}
+#gallery .gallery-grid .g-item {
+  break-inside: avoid; margin-bottom: 12px;
+}
+#gallery .gallery-grid img { width: 100%; height: auto; display: block; }
+
+/* ═══ FOOTER ═══ */
+.page-footer {
+  border-top: 1px solid var(--rule);
+  padding: 32px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--gray); letter-spacing: 0.06em;
+}
+.page-footer-links { display: flex; gap: 28px; }
+.page-footer a { color: var(--black); text-decoration: none; }
+.page-footer a:hover { color: var(--gray); }
+
+/* ═══ FADE ═══ */
+.fi { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fi.v { opacity: 1; transform: none; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 860px) {
+  nav { padding: 16px 24px; }
+  .hero { grid-template-columns: 1fr; padding: 130px 24px 64px; gap: 40px; }
+  .hero-img { display: none; }
+  .anchor-nav { padding: 0 24px; overflow-x: auto; }
+  .anchor-nav ul { width: max-content; }
+  .section { padding: 64px 24px; }
+  #arico { padding: 64px 0; }
+  #arico .arico-inner { padding: 0 24px; }
+  .arico-layout { grid-template-columns: 1fr; gap: 48px; }
+  #concept .concept-layout { grid-template-columns: 1fr; gap: 36px; }
+  #nest .nest-grid { grid-template-columns: 1fr; }
+  #nest .nest-grid-sub { grid-template-columns: 1fr 1fr; }
+  .sp { grid-template-columns: 1fr; gap: 24px; }
+  #gallery .gallery-grid { columns: 2; }
+  .page-footer { flex-direction: column; gap: 16px; padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">FUSANO <span>Portfolio</span></a>
+  <a class="nav-back" href="#">← Works</a>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero fi">
+  <div class="hero-text">
+    <span class="hero-tag">Original IP — Ongoing</span>
+    <h1>Socialty,<br>Very Ant.</h1>
+    <p class="hero-jp">社会性ありあり〼</p>
+    <p class="hero-main-copy">個は小さく、群れは世界をつくる。</p>
+    <p class="hero-sub-copy">アリの社会性を通して、個と群れ、自然と人間、AI時代の共同体を考える一次創作IP。</p>
+  </div>
+  <div class="hero-img">
+    <img src="ari-images/logo1.jpg" alt="社会性ありあり〼">
+  </div>
+</div>
+
+<!-- ANCHOR NAV -->
+<nav class="anchor-nav fi">
+  <ul>
+    <li><a href="#concept">Concept</a></li>
+    <li><a href="#arico">ARICO</a></li>
+    <li><a href="#nest">Nest</a></li>
+    <li><a href="#species">Species</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+<div class="accent-bar"></div>
+
+<!-- ═══════════ 01 CONCEPT ═══════════ -->
+<div class="section fi" id="concept">
+  <div class="section-head">
+    <span class="s-num">01</span>
+    <span class="s-title">Concept / このIPについて</span>
+  </div>
+  <div class="concept-layout">
+    <div class="concept-body">
+      <p class="lead">Socialty, Very Ant. は、アリの生態・社会性・巣の構造をもとにした一次創作IPです。</p>
+      <p>アリたちは、可愛いキャラクターでありながら、ただ人間の服を着た虫ではありません。その身体、役割、巣、フェロモン、触角、労働、繁殖、死、環境への適応には、人間とは異なる社会の仕組みが刻まれています。</p>
+      <p>この作品では、アリの社会性を、人間の文化の形を借りて描きます。服は役割であり、建物は巣であり、儀礼は共同体を保つ行為です。</p>
+      <p>描きたいのは、強い個人が世界を支配する物語ではなく、小さな存在たちがそれぞれの感覚や役割を持ちながら、ゆるやかにつながって世界を動かしていく物語です。</p>
+    </div>
+    <div class="concept-aside">
+      <div class="pull">
+        群れは美しい。でも、群れは怖い。<br>
+        個は小さい。でも、個がなければ群れは存在しない。
+      </div>
+      <p>アリの群れには、単純な中央集権とは違う知性がある。女王アリは存在するが、女王がすべてに命令しているわけではない。たくさんの小さな反応がつながり、流れとなり、社会となる。</p>
+      <p>虫の擬人化であり、社会の寓話であり、分散的な知性の絵であり、人間と自然とAIのこれからを考えるための一次創作。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 02 ARICO ═══════════ -->
+<section id="arico" class="fi">
+  <div class="arico-inner">
+    <div class="section-head">
+      <span class="s-num">02</span>
+      <span class="s-title">ARICO / 言語と流れ</span>
+    </div>
+    <div class="arico-layout">
+      <div class="arico-text">
+        <h3>ARICO <em>— ありちゃん諸語の祖語</em></h3>
+        <span class="arico-subtitle">Proto-language of the Arichan Tongues</span>
+
+        <p>ARICOは、Socialty, Very Ant. におけるありちゃん諸語の祖語です。アリの社会性、巣の構造、匂いによる経路共有、仲間認識、幼体保護などをもとに設計された、少語彙・高密度・状態志向の人工言語です。</p>
+        <p>ARICOは、個体の感情を告白するための言語ではありません。群れの状態を確認し、伝え、流れを保つための言語です。音声だけでなく、補助口器、触角、匂いの情報が重なる多層通信体系を持つため、文字に残されたARICOは常に不完全です。</p>
+
+        <div class="arico-core">
+          <div class="arico-core-main">流れを見よ · 言え · 保て</div>
+          <div class="arico-core-sub">SEE · SPEAK · MAINTAIN THE FLOW</div>
+          <div class="arico-core-note">世界の状態を確認する文が、そのまま合図になる。<br>愛してる、の代わりに、帰るべきところが保たれている、と言う。</div>
+        </div>
+
+        <a class="arico-link" href="https://fusano-bit.github.io/arico-tree/" target="_blank">
+          ARICO諸語の樹 →
+        </a>
+      </div>
+
+      <figure class="arico-diagram">
+        <img src="ari-images/arico-map.jpg" alt="ARICO 語根ネットワーク図">
+        <figcaption>語根ネットワーク図 / Root Network Diagram</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 NEST ═══════════ -->
+<div class="section fi" id="nest">
+  <div class="section-head">
+    <span class="s-num">03</span>
+    <span class="s-title">Nest / 巣と生活空間</span>
+  </div>
+
+  <div class="nest-grid">
+    <img src="ari-images/0_1.jpg" alt="巣の断面図 全体構造">
+    <img src="ari-images/0_2.jpg" alt="巣の断面図 居室・化粧間">
+  </div>
+  <div class="nest-grid-sub">
+    <img src="ari-images/0_3.jpg" alt="巣の断面図 食料庫">
+    <img src="ari-images/0_4.jpg" alt="巣の断面図 深部・女王室">
+    <img src="ari-images/logo2.jpg" alt="社会性ありあり〼 ビジュアル">
+  </div>
+
+  <p class="nest-caption">クロオオアリの巣を日本家屋として再構築した世界観断面図。建物は住居であると同時に巣であり、服は装飾であると同時に役割。御簾や帳は権威の演出であると同時に、フェロモンの膜。中央に大きな屋敷があり、女王のいる御簾の奥には、直接触れられない濃いフェロモンの気配がある。</p>
+</div>
+
+<!-- ═══════════ 04 SPECIES ═══════════ -->
+<div class="section fi" id="species">
+  <div class="section-head">
+    <span class="s-num">04</span>
+    <span class="s-title">Species / 種ごとのキャラクター</span>
+  </div>
+
+  <div class="species-list">
+
+    <!-- クロオオアリ -->
+    <div class="sp">
+      <div class="sp-meta">
+        <span class="sp-num">Species 01</span>
+        <div class="sp-name">クロオオアリ</div>
+        <span class="sp-latin">Camponotus japonica</span>
+        <p class="sp-desc">大柄で安定した労働型。荷運び・育児・日々の巣の営みを支える基幹種。複眼には星座の断片が映り、フェロモンと接触で世界を読む。女王は命令する王ではなく「命令しない中心」として群れの継続を担う。雄は短い役割のために生まれ、命を使い切る。</p>
+      </div>
+      <div class="sp-images wide">
+        <img src="ari-images/1.jpg" alt="クロオオアリ ワーカー 荷役">
+        <img src="ari-images/3.jpg" alt="クロオオアリ 女王 Queen">
+        <img src="ari-images/4.jpg" alt="クロオオアリ 雄 Male">
+        <img src="ari-images/kurooari_worker.jpg" alt="クロオオアリ 生態図">
+      </div>
+    </div>
+
+    <!-- サムライアリ -->
+    <div class="sp">
+      <div class="sp-meta">
+        <span class="sp-num">Species 02</span>
+        <div class="sp-name">サムライアリ</div>
+        <span class="sp-latin">Polyergus samurai</span>
+        <p class="sp-desc">小柄で俊敏な夜襲型。他種の幼虫を奪う遠征を担い、軽装と威嚇の文化を持つ。噛み砕くことに特化した大顎を持ち、自分では食事もできない戦闘特化種。鬼面の仮面は巣ごとにデザインが異なり、帰属と恐怖を同時に示す。</p>
+      </div>
+      <div class="sp-images">
+        <img src="ari-images/5.jpg" alt="サムライアリ 戦士">
+        <img src="ari-images/samurai_humanoid2.jpg" alt="サムライアリ 可動域設定">
+        <img src="ari-images/samurai_worker.jpg" alt="サムライアリ 生態図">
+      </div>
+    </div>
+
+    <!-- カメアリ -->
+    <div class="sp">
+      <div class="sp-meta">
+        <span class="sp-num">Species 03</span>
+        <div class="sp-name">カメアリ</div>
+        <span class="sp-latin">Cephalotes varians</span>
+        <p class="sp-desc">樹上生活に特化した「空飛ぶアリ」。平たく巨大な頭楯で巣穴の入口を塞ぐ「戸番」の役割も持つ。熱帯域に生息し、積み重なる民族装飾の層として衣装を表現。世界を葉の上から見下ろす視点を持つ種。</p>
+      </div>
+      <div class="sp-images">
+        <img src="ari-images/10.jpg" alt="カメアリ ワーカー">
+        <img src="ari-images/cephalotes_humanoid.jpg" alt="カメアリ 人型">
+        <img src="ari-images/cephalotes_anatomy.jpg" alt="カメアリ 解剖図">
+      </div>
+    </div>
+
+    <!-- キノムラ + ハヤシ -->
+    <div class="sp">
+      <div class="sp-meta">
+        <span class="sp-num">Species 04</span>
+        <div class="sp-name">キノムラヤドリムネボソアリ<br>ハヤシムネボソアリ</div>
+        <span class="sp-latin">Temnothorax kinomurai · T. makora</span>
+        <p class="sp-desc">社会寄生の関係にある2種。キノムラはハヤシの巣に潜入し、毒針でホスト個体を操作しながら共生する。群れの「内と外」の境界がいかに曖昧かを体現する存在として、Socialty, Very Ant. の思想的コアを担う。</p>
+      </div>
+      <div class="sp-images">
+        <img src="ari-images/kinomura_humanoid.jpg" alt="キノムラヤドリムネボソアリ 人型">
+        <img src="ari-images/hayashi_ant.jpg" alt="ハヤシムネボソアリ 寄生関係図">
+        <img src="ari-images/kinomura_ant.jpg" alt="キノムラヤドリムネボソアリ 解剖図">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ 05 GALLERY ═══════════ -->
+<div class="section fi" id="gallery">
+  <div class="section-head">
+    <span class="s-num">05</span>
+    <span class="s-title">Gallery / Finished Works</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item"><img src="ari-images/2.jpg" alt="クロオオアリ 複眼"></div>
+    <div class="g-item"><img src="ari-images/6.jpg" alt="サムライアリ × クロオオアリ"></div>
+    <div class="g-item"><img src="ari-images/8.jpg" alt="日本髪型設定 · 仮面資料"></div>
+    <div class="g-item"><img src="ari-images/7.jpg" alt="種比較図 実寸"></div>
+    <div class="g-item"><img src="ari-images/kurooari_humanoid.jpg" alt="クロオオアリ 可動域設定"></div>
+    <div class="g-item"><img src="ari-images/kinomura_humanoid2.jpg" alt="キノムラヤドリムネボソアリ 人型"></div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE FOOTER ═══════════ -->
+<footer class="page-footer">
+  <div class="page-footer-links">
+    <a href="#">← Prev</a>
+    <a href="#">Works Index</a>
+    <a href="#">Next →</a>
+  </div>
+  <div>© FUSANO</div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); }),
+  { threshold: 0.06 }
+);
+document.querySelectorAll('.fi').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
