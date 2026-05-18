@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusano — Illustrator / Character Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111;--paper:#fff;--ash:#777;--ash2:#ccc;--line:#e8e8e8;
+  --bg-w:#f7f7f5;--bg-dark:#181818;
+  --neon:#c5e821;--neon2:#a8d000;
+  --sans:'Jost','Noto Sans JP',sans-serif;
+  --nav-h:64px;--pad:3rem
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+section{scroll-margin-top:calc(var(--nav-h) + 16px)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-logo{font-size:.75rem;letter-spacing:.4em;font-weight:500;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{padding:.45rem 1rem;border:1px solid var(--ink);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--ink);color:var(--paper)!important}
+.nav-hb{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.nav-hb span{display:block;width:20px;height:1px;background:var(--ink)}
+
+/* HERO */
+#hero{padding-top:var(--nav-h);display:flex;flex-direction:column;min-height:100vh}
+.hero-body{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - var(--nav-h))}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:3.5rem var(--pad);border-right:1px solid var(--line)}
+.hero-kicker{font-size:.6rem;letter-spacing:.45em;text-transform:uppercase;color:var(--ash);margin-bottom:1.5rem}
+.hero-name{font-size:clamp(3.2rem,6.5vw,6rem);font-weight:200;line-height:1;letter-spacing:-.02em;margin-bottom:.5rem}
+.hero-ja{font-size:clamp(.9rem,1.6vw,1.2rem);color:var(--ash);letter-spacing:.22em;margin-bottom:1.8rem}
+.hero-roles{display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.6rem}
+.hero-roles span{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash)}
+.hero-tag{font-size:.84rem;line-height:1.82;color:#444;max-width:35ch;margin-bottom:2rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.btn-dark{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;padding:.65rem 1.6rem;background:var(--ink);color:var(--paper);border:1px solid var(--ink);transition:background .22s,color .22s,border-color .22s;cursor:pointer;white-space:nowrap}
+.btn-dark:hover{background:var(--neon);color:var(--ink);border-color:var(--neon)}
+.btn-line{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);border-bottom:1px solid transparent;transition:color .2s,border-color .2s;padding-bottom:2px;white-space:nowrap}
+.btn-line:hover{color:var(--ink);border-color:var(--ink)}
+.hero-quick{display:flex;gap:1.5rem;flex-wrap:wrap;padding-top:1.4rem;border-top:1px solid var(--line)}
+.hero-ql{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);display:flex;align-items:center;gap:.35rem;transition:color .2s}
+.hero-ql::before{content:'→';font-size:.6rem}
+.hero-ql:hover{color:var(--ink)}
+
+/* Hero right: 縦3分割 contain */
+.hero-right{background:#f0f0ee;overflow:hidden;max-height:calc(100vh - var(--nav-h))}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:100%;gap:2px}
+.hc{background:#f0f0ee;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hc img{width:100%;height:100%;object-fit:contain;transition:transform .5s ease}
+.hc:hover img{transform:scale(1.03)}
+
+.hero-scroll{display:flex;align-items:center;gap:.8rem;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);padding:1rem var(--pad)}
+.hero-sl{width:40px;height:1px;background:var(--ash2);position:relative;overflow:hidden}
+.hero-sl::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--ink);animation:sl 2s ease-in-out infinite}
+@keyframes sl{0%{left:-100%}50%{left:0}100%{left:100%}}
+
+/* SHARED */
+.sp{padding:5rem var(--pad)}
+.sdiv{height:1px;background:var(--line);margin:0 var(--pad)}
+.sh{display:flex;align-items:baseline;gap:2rem;margin-bottom:2.5rem}
+.sn{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);white-space:nowrap}
+.st{font-size:clamp(1.4rem,2.8vw,2rem);font-weight:300;letter-spacing:-.01em}
+.ss{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-top:.35rem}
+.slb{display:inline-block;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;padding:.28rem .65rem;border:1px solid var(--neon);color:var(--ink);background:rgba(197,232,33,.07);margin-bottom:1.2rem}
+.cap{font-size:.6rem;color:var(--ash);letter-spacing:.1em;padding:.35rem .2rem;line-height:1.5}
+.lead{font-size:.86rem;line-height:1.88;color:#444;margin-bottom:1.6rem}
+.pts{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.pts li{display:flex;align-items:baseline;gap:.75rem;font-size:.79rem;color:#333;line-height:1.5}
+.pts li::before{content:'';width:14px;height:1px;background:var(--neon2);flex-shrink:0;position:relative;top:-.18em}
+
+/* 3本柱 */
+#pillars{padding:5rem var(--pad);border-top:1px solid var(--line)}
+.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--line);margin-bottom:2rem}
+.pillar{position:relative;overflow:hidden;aspect-ratio:4/5;background:#e2e2e0;cursor:pointer}
+.pillar-img{position:absolute;inset:0}
+.pillar-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.23,1,.32,1);filter:brightness(.42) saturate(.75)}
+.pillar:hover .pillar-img img{transform:scale(1.07);filter:brightness(.32)}
+.pillar-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.6rem 1.4rem}
+.pillar-num{font-size:.58rem;letter-spacing:.38em;color:var(--neon);font-weight:500;margin-bottom:.4rem}
+.pillar-title{font-size:1rem;font-weight:400;color:#fff;line-height:1.2;margin-bottom:.55rem}
+.pillar-desc{font-size:.63rem;color:rgba(255,255,255,.68);line-height:1.55}
+.pillar-arr{position:absolute;top:1.1rem;right:1.1rem;width:26px;height:26px;border:1px solid rgba(255,255,255,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(5px);transition:opacity .3s,transform .3s}
+.pillar:hover .pillar-arr{opacity:1;transform:translateY(0)}
+.pillar-arr::after{content:'↓';color:rgba(255,255,255,.85);font-size:.68rem}
+.clients-row{display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;padding-top:1.8rem;border-top:1px solid var(--line)}
+.cl-label{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);white-space:nowrap}
+.cl-text{font-size:.76rem;color:#555;line-height:1.8}
+
+/* SELECTED WORKS: cover で一覧性重視 */
+#selected{padding:5rem var(--pad);background:var(--bg-w)}
+.sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid var(--line);margin-bottom:1.5rem}
+.sw-card{background:var(--paper);overflow:hidden;cursor:pointer;transition:box-shadow .25s}
+.sw-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.1)}
+.sw-img{aspect-ratio:4/3;overflow:hidden;background:#e2e2e0}
+.sw-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.sw-card:hover .sw-img img{transform:scale(1.05)}
+.sw-body{padding:.95rem 1rem 1.1rem;border-top:1px solid var(--line)}
+.sw-kicker{font-size:.53rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash);margin-bottom:.28rem}
+.sw-title{font-size:.82rem;font-weight:400;margin-bottom:.32rem;line-height:1.3}
+.sw-desc{font-size:.66rem;color:#555;line-height:1.55}
+.sw-tags{display:flex;flex-wrap:wrap;gap:.28rem;margin-top:.55rem}
+.sw-tag{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:.16rem .4rem;border:1px solid var(--line);color:var(--ash)}
+
+/* WORK IMAGE: contain */
+.wi{background:var(--bg-w);display:flex;align-items:center;justify-content:center;padding:10px}
+.wi img{width:100%;height:auto;object-fit:contain;display:block}
+.wi-d{background:var(--bg-dark);display:flex;align-items:center;justify-content:center}
+.wi-d img{width:100%;height:auto;object-fit:contain;display:block}
+.wi-p{overflow:hidden}
+.wi-p img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.wi-p:hover img{transform:scale(1.03)}
+
+/* グリッド */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mb6{margin-bottom:6px}.mb12{margin-bottom:12px}.mb24{margin-bottom:24px}
+.mb32{margin-bottom:32px}.mb48{margin-bottom:48px}
+
+/* SCOPE */
+.scope{background:#f8f8f6;border:1px solid var(--line);padding:2rem 2.5rem;display:grid;grid-template-columns:1fr 2fr;gap:2.5rem;align-items:start}
+.scope-lbl{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash);line-height:1.8}
+.scope-items{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem 1.2rem}
+.si{display:flex;align-items:baseline;gap:.55rem;font-size:.77rem;color:#333;line-height:1.4}
+.si::before{content:'✓';color:var(--neon2);font-size:.68rem;flex-shrink:0}
+.sec-cta{display:flex;align-items:center;justify-content:flex-end;gap:1.5rem;margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.sec-cta-txt{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.sec-cta-btn{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.1rem;border:1px solid var(--ink);color:var(--ink);transition:background .2s,color .2s;white-space:nowrap}
+.sec-cta-btn:hover{background:var(--ink);color:var(--paper)}
+
+/* SUBSEC */
+.ssub{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);border-bottom:1px solid var(--line);padding-bottom:.75rem;margin-bottom:1.1rem}
+
+/* INTRO */
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start;margin-bottom:2.5rem}
+.hero-badge{position:absolute;bottom:.9rem;right:.9rem;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);padding:.6rem .9rem;border-left:2px solid var(--neon)}
+.hero-badge-lbl{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--neon);margin-bottom:.2rem}
+.hero-badge-ttl{font-size:.73rem;color:#fff;font-weight:400}
+
+/* AI STEPS */
+.ai-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:2rem}
+.ai-step{background:#fafafa;border:1px solid var(--line)}
+.ai-step-img{background:var(--bg-w);display:flex;align-items:center;justify-content:center;padding:8px}
+.ai-step-img img{width:100%;height:auto;object-fit:contain;display:block}
+.ai-step-body{padding:1rem 1.2rem 1.2rem}
+.ai-num{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--neon2);margin-bottom:.3rem;font-weight:500}
+.ai-ttl{font-size:.85rem;font-weight:400;margin-bottom:.35rem}
+.ai-desc{font-size:.72rem;color:#555;line-height:1.62}
+.ai-note{font-size:.68rem;color:var(--ash);border-left:2px solid var(--line);padding-left:.9rem;margin-bottom:2rem;line-height:1.7}
+
+/* IP */
+.ip-ph{display:flex;align-items:baseline;gap:1.2rem;margin-bottom:1.3rem;padding-bottom:.9rem;border-bottom:1px solid var(--line)}
+.ip-kicker{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);white-space:nowrap}
+.ip-title{font-size:1.3rem;font-weight:300;letter-spacing:-.01em}
+.ip-sub{font-size:.66rem;color:var(--ash);letter-spacing:.1em;margin-top:.18rem}
+.mio{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px}
+.mio-c{aspect-ratio:4/3;overflow:hidden;background:#e2e2e0}
+.mio-c img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.mio-c:hover img{transform:scale(1.04)}
+.local{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.local-c{background:var(--bg-w);display:flex;align-items:center;justify-content:center;padding:8px}
+.local-c img{width:100%;height:auto;object-fit:contain;display:block}
+
+/* BOOKS */
+.book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2rem}
+.book-img{background:var(--bg-w);display:flex;align-items:center;justify-content:center;padding:10px;margin-bottom:.6rem}
+.book-img img{width:100%;height:auto;object-fit:contain;display:block}
+.book-title{font-size:.72rem;font-weight:400;margin-bottom:.25rem;line-height:1.4}
+.book-pub{font-size:.6rem;color:var(--ash)}
+
+/* TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.tool-card{border:1px solid var(--line);padding:1.6rem;background:#fafafa}
+.tool-head{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
+.tool-item{margin-bottom:.8rem}
+.tool-name{font-size:.8rem;font-weight:400;margin-bottom:.15rem}
+.tool-desc{font-size:.7rem;color:#555;line-height:1.6}
+.tool-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.tool-tag{font-size:.6rem;letter-spacing:.1em;padding:.22rem .55rem;background:var(--paper);border:1px solid var(--ash2);color:#555}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.c-links{display:flex;flex-direction:column;gap:.9rem;margin-bottom:2rem}
+.c-link{display:flex;align-items:center;gap:1rem;font-size:.78rem;color:#333;border-bottom:1px solid var(--line);padding-bottom:.9rem;transition:color .2s}
+.c-link:hover{color:var(--ink)}
+.c-lbl{font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash);min-width:52px}
+.avail{background:#f8f8f6;border:1px solid var(--line);padding:2rem}
+.avail-h{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);margin-bottom:1rem;padding-bottom:.65rem;border-bottom:1px solid var(--line)}
+.avail-items{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+.avail-item{display:flex;align-items:baseline;gap:.75rem;font-size:.78rem;color:#333;line-height:1.5}
+.avail-item::before{content:'';width:14px;height:1px;background:var(--neon2);flex-shrink:0;position:relative;top:-.18em}
+.deliv{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.deliv-tag{font-size:.6rem;letter-spacing:.1em;padding:.22rem .55rem;background:var(--paper);border:1px solid var(--ash2);color:#555}
+.wf-step{display:flex;align-items:center;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--line)}
+.wf-step:last-child{border-bottom:none}
+.wf-n{width:24px;height:24px;border:1px solid var(--ash2);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--ash);flex-shrink:0}
+.wf-t{font-size:.78rem;color:#444}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.rev.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+
+/* MOBILE */
+@media(max-width:900px){
+  :root{--pad:1.5rem}
+  .nav-links{display:none}.nav-hb{display:flex}
+  .hero-body{grid-template-columns:1fr;min-height:auto}
+  .hero-left{border-right:none;border-bottom:1px solid var(--line);min-height:62vh}
+  .hero-right{height:50vw;min-height:240px}
+  .hero-grid{grid-template-rows:1fr;grid-template-columns:repeat(3,1fr)}
+  .pillar-grid{grid-template-columns:1fr 1fr}
+  .sw-grid{grid-template-columns:repeat(2,1fr)}
+  .intro{grid-template-columns:1fr;gap:2rem}
+  .g4,.g5{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:1fr 1fr}
+  .ai-steps{grid-template-columns:1fr 1fr}
+  .mio{grid-template-columns:1fr 1fr}
+  .local{grid-template-columns:1fr 1fr}
+  .scope{grid-template-columns:1fr;gap:1.5rem;padding:1.8rem 1.5rem}
+  .scope-items{grid-template-columns:1fr 1fr}
+  .tools-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:2rem}
+  .book-grid{grid-template-columns:repeat(2,1fr)}
+  .sp,.sdiv+.sp{padding:3.5rem var(--pad)}
+  #pillars,#selected{padding:3.5rem var(--pad)}
+}
+@media(max-width:600px){
+  :root{--nav-h:56px}
+  .pillar-grid{grid-template-columns:1fr}
+  .sw-grid{grid-template-columns:1fr 1fr}
+  .ai-steps{grid-template-columns:1fr}
+  .g4,.g5{grid-template-columns:1fr 1fr}
+  .scope-items{grid-template-columns:1fr}
+  .book-grid{grid-template-columns:1fr 1fr}
+  .hero-grid{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rev{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo" style="cursor:pointer">Fusano</a>
+  <div class="nav-links">
+    <a href="#character-design">Character</a>
+    <a href="#game-art">Game Art</a>
+    <a href="#quality-control">Quality Control</a>
+    <a href="#ip-expansion">IP</a>
+    <a href="#books">Books</a>
+    <a href="ai-policy.html" style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);transition:color .2s" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ash)'">AI Policy</a><a href="#contact" class="nav-cta">Contact</a>
+  </div>
+  <div class="nav-hb" aria-label="menu"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-body">
+    <div class="hero-left rev">
+      <p class="hero-kicker">Freelance Illustrator / Character Designer</p>
+      <h1 class="hero-name">Fusano</h1>
+      <p class="hero-ja">フサノ</p>
+      <div class="hero-roles">
+        <span>Character Design · Game Art · IP Expansion</span>
+        <span>Quality Control · AI-assisted Production</span>
+      </div>
+      <p class="hero-tag">キャラクターを起点に、ゲーム制作・IP展開・実媒体・品質調整までつなげられるイラストレーター。フリーランス活動歴 約15年。</p>
+      <div class="hero-btns">
+        <a href="#selected" class="btn-dark">実績を見る</a>
+        <a href="#contact" class="btn-line">Contact →</a>
+      </div>
+      <div class="hero-quick">
+        <a href="mailto:fq53fusano@gmail.com" class="hero-ql">Mail</a>
+        <a href="https://x.com/rectsxux" target="_blank" rel="noopener" class="hero-ql">X / Portfolio</a>
+        <a href="#contact" class="hero-ql">稼働条件を確認する</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Hero: 大1(左全体)+小2(右上下) の2x2グリッド -->
+      <div class="hero-grid">
+        <div class="hc" style="grid-column:1/2;grid-row:1/3"><img src="img/img_021.jpg" alt="キャラクターデザイン" loading="eager"></div>
+        <div class="hc"><img src="img/img_096.jpg" alt="WIXOSS LAND ゲーム実績" loading="eager"></div>
+        <div class="hc"><img src="img/img_016.jpg" alt="ミオヤマザキ 公式ビジュアル" loading="eager"></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="hero-sl"></div>Scroll</div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- 3本柱 -->
+<section id="pillars">
+  <div class="sh rev">
+    <span class="sn">— What I can do</span>
+    <div><h2 class="st">フサノに頼めること</h2><p class="ss">3本柱</p></div>
+  </div>
+  <div class="pillar-grid">
+    <a href="#character-design" class="pillar rev d1">
+      <div class="pillar-img"><img src="img/img_021.jpg" alt="Character Design" loading="lazy"></div>
+      <div class="pillar-body">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Character Design</div>
+        <div class="pillar-desc">ヒロイン・歴史ファンタジー・SD・非人間まで。媒体に合わせたキャラクター設計。</div>
+      </div>
+      <div class="pillar-arr"></div>
+    </a>
+    <a href="#game-art" class="pillar rev d2">
+      <div class="pillar-img"><img src="img/img_099.jpg" alt="Game & Production Art" loading="lazy"></div>
+      <div class="pillar-body">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Game &amp; Production Art</div>
+        <div class="pillar-desc">背景・エフェクト・キャラ素材・赤入れ・品質調整。商業制作の現場に合わせた素材制作。</div>
+      </div>
+      <div class="pillar-arr"></div>
+    </a>
+    <a href="#ip-expansion" class="pillar rev d3">
+      <div class="pillar-img"><img src="img/img_016.jpg" alt="IP & Media Expansion" loading="lazy"></div>
+      <div class="pillar-body">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">IP / Media Expansion</div>
+        <div class="pillar-desc">音楽アーティスト公式ビジュアル・ご当地キャラ・書籍・グッズ・イベント展開。</div>
+      </div>
+      <div class="pillar-arr"></div>
+    </a>
+  </div>
+  <div class="clients-row rev">
+    <span class="cl-label">Selected Clients</span>
+    <span class="cl-text">ミオヤマザキ / リコーテクノロジーズ / SANKO MARKETING FOODS / 株式会社ミモタイプ（WIXOSS LAND）/ 双葉社・日本文芸社・汐文社（計5冊）/ 専門学校講師 2年</span>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- SELECTED WORKS: 7枚、cover一覧 -->
+<section id="selected">
+  <div class="sh rev">
+    <span class="sn">— 実績ハイライト</span>
+    <div><h2 class="st">Selected Works</h2><p class="ss">代表実績 / 7案件</p></div>
+  </div>
+  <div class="sw-grid">
+    <a href="#game-art" class="sw-card rev d1">
+      <div class="sw-img"><img src="img/img_099.jpg" alt="WIXOSS LAND" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Game IP Works</div>
+        <div class="sw-title">WIXOSS LAND</div>
+        <div class="sw-desc">キャラ・背景・エフェクト・品質調整を横断担当。</div>
+        <div class="sw-tags"><span class="sw-tag">Character</span><span class="sw-tag">BG</span><span class="sw-tag">Effect</span><span class="sw-tag">QC</span></div>
+      </div>
+    </a>
+    <a href="#game-art" class="sw-card rev d2">
+      <div class="sw-img"><img src="img/img_104.jpg" alt="病み彼女これくしょん" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Mobile Game Works</div>
+        <div class="sw-title">病み彼女これくしょん</div>
+        <div class="sw-desc">累計100万DL。キャラクター・スチル・エンディングCGを担当。</div>
+        <div class="sw-tags"><span class="sw-tag">Character</span><span class="sw-tag">Stills</span><span class="sw-tag">CG</span></div>
+      </div>
+    </a>
+    <a href="#quality-control" class="sw-card rev d3">
+      <div class="sw-img"><img src="img/img_105.jpg" alt="Hotdog Palace" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Game Art Direction Support</div>
+        <div class="sw-title">Hotdog Palace</div>
+        <div class="sw-desc">ベンチマーク制作・品質調整・AD補佐。</div>
+        <div class="sw-tags"><span class="sw-tag">Benchmark</span><span class="sw-tag">QC</span><span class="sw-tag">AD補佐</span></div>
+      </div>
+    </a>
+    <a href="#character-design" class="sw-card rev d4">
+      <div class="sw-img"><img src="img/img_021.jpg" alt="Character Design" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Character Design</div>
+        <div class="sw-title">Character Design</div>
+        <div class="sw-desc">ヒロイン・歴史ファンタジー・SD・非人間まで対応。</div>
+        <div class="sw-tags"><span class="sw-tag">Heroine</span><span class="sw-tag">Fantasy</span><span class="sw-tag">SD</span></div>
+      </div>
+    </a>
+    <a href="#ip-expansion" class="sw-card rev d1">
+      <div class="sw-img"><img src="img/img_016.jpg" alt="ミオヤマザキ" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Music Artist Official Visual</div>
+        <div class="sw-title">ミオヤマザキ "un-speakable"</div>
+        <div class="sw-desc">公式ビジュアル・CDジャケット・グッズ・会場装飾まで一貫制作。</div>
+        <div class="sw-tags"><span class="sw-tag">CD Jacket</span><span class="sw-tag">Goods</span><span class="sw-tag">Event</span></div>
+      </div>
+    </a>
+    <a href="#ip-expansion" class="sw-card rev d2">
+      <div class="sw-img"><img src="img/img_083.jpg" alt="ご当地キャラ" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Local Mascot / Regional IP</div>
+        <div class="sw-title">ご当地キャラ / 地域IP</div>
+        <div class="sw-desc">商品・販促物・地域IP・実物媒体への展開。</div>
+        <div class="sw-tags"><span class="sw-tag">Local IP</span><span class="sw-tag">Goods</span><span class="sw-tag">Product</span></div>
+      </div>
+    </a>
+    <a href="#books" class="sw-card rev d3">
+      <div class="sw-img"><img src="img/img_010.png" alt="書籍・教材イラスト" loading="lazy"></div>
+      <div class="sw-body">
+        <div class="sw-kicker">Books / Educational Illustration</div>
+        <div class="sw-title">書籍・教材イラスト</div>
+        <div class="sw-desc">双葉社・日本文芸社・汐文社 計5冊 / 台湾翻訳版あり。</div>
+        <div class="sw-tags"><span class="sw-tag">双葉社</span><span class="sw-tag">日本文芸社</span><span class="sw-tag">汐文社</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- CHARACTER DESIGN -->
+<section id="character-design" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 01</span>
+    <div><h2 class="st">Character Design</h2><p class="ss">Heroine / Historical / SD / Mascot / Non-human</p></div>
+  </div>
+
+  <!-- Type 01: ヒロイン -->
+  <div class="mb48">
+    <div class="intro rev">
+      <div>
+        <span class="slb">Type 01 — Heroine / Anime-style</span>
+        <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-bottom:.6rem">ヒロイン・アニメ系<br>キャラクターデザイン</h3>
+        <p style="font-size:.72rem;color:var(--ash);letter-spacing:.15em;margin-bottom:1.2rem">Heroine / Anime-style Character Design</p>
+        <p class="lead">ゲーム・ライトノベル・アプリ向けのヒロイン・アニメ系キャラクター。第一印象でキャラクター性が伝わるよう、衣装・髪型・表情・ポーズ・カラーを設計。「かわいい系 / IP系 / 音楽バンド系 / SF系」まで画風の幅が広いのが強みです。</p>
+        <ul class="pts">
+          <li>衣装・髪型・表情・ポーズによる印象設計</li>
+          <li>ゲーム・ライトノベル・アプリ向けヒロイン</li>
+          <li>ComicalGirl NFTなどIPビジュアル制作実績</li>
+          <li>画風・媒体に合わせた描き分けに対応</li>
+        </ul>
+      </div>
+      <div style="position:relative">
+        <div class="wi"><img src="img/img_021.jpg" alt="ライトノベル表紙風ビジュアル" loading="lazy"></div>
+        <div class="hero-badge"><div class="hero-badge-lbl">Featured</div><div class="hero-badge-ttl">ライトノベル表紙風ビジュアル</div></div>
+      </div>
+    </div>
+    <div class="g4 mb6 rev">
+      <div class="wi"><img src="img/img_070.jpg" alt="パステルファッションキャラクター" loading="lazy"></div>
+      <div class="wi"><img src="img/img_072.jpg" alt="ComicalGirl IPビジュアル" loading="lazy"></div>
+      <div class="wi"><img src="img/img_076.jpg" alt="音楽・バンド系キャラクター" loading="lazy"></div>
+      <div class="wi"><img src="img/img_077.jpg" alt="SFキャラクターイラスト" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- Type 02: 歴史・ファンタジー -->
+  <div class="mb48">
+    <div class="intro rev">
+      <div>
+        <span class="slb">Type 02 — Historical / Fantasy</span>
+        <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-bottom:.6rem">歴史・ファンタジー・<br>体型差キャラクターデザイン</h3>
+        <p style="font-size:.72rem;color:var(--ash);letter-spacing:.15em;margin-bottom:1.2rem">Historical / Fantasy / Non-standard Body</p>
+        <p class="lead">歴史系・ファンタジー系モチーフに対応。装飾密度の高い衣装・甲冑・武具設計から、体格差・年齢差・非定型体型の描き分けまで。世界観に合わせたシルエット設計と、キャラクター性が伝わる衣装・ポーズ・顔立ちの調整力を提示します。</p>
+        <ul class="pts">
+          <li>装飾密度と非定型体型対応</li>
+          <li>和装・甲冑・民族衣装・武具設計</li>
+          <li>歴史武将・ファンタジー系世界観の整合</li>
+          <li>筋肉キャラ・体型差キャラの描き分け</li>
+        </ul>
+      </div>
+      <div style="position:relative">
+        <!-- 見出しは宮本武蔵 img_023.png -->
+        <div class="wi"><img src="img/img_023.png" alt="歴史武将キャラクターデザイン" loading="lazy"></div>
+        <div class="hero-badge"><div class="hero-badge-lbl">Featured</div><div class="hero-badge-ttl">歴史武将キャラクターデザイン</div></div>
+      </div>
+    </div>
+    <!-- 023を除く歴史系4枚: 024/002/043/044 -->
+    <div class="g4 mb6 rev">
+      <div class="wi"><img src="img/img_024.png" alt="戸田勝成" loading="lazy"></div>
+      <div class="wi"><img src="img/img_002.png" alt="お梶の方" loading="lazy"></div>
+      <div class="wi"><img src="img/img_043.png" alt="ファンタジーキャラクター" loading="lazy"></div>
+      <div class="wi"><img src="img/img_044.png" alt="ファンタジーキャラクター" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- Type 03: SD・マスコット・非人間 -->
+  <div class="mb32">
+    <div class="rev" style="margin-bottom:1.8rem">
+      <span class="slb">Type 03 — SD / Mascot / Non-human</span>
+      <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-top:.5rem;margin-bottom:.6rem">SD・マスコット・非人間<br>キャラクターデザイン</h3>
+      <p style="font-size:.72rem;color:var(--ash);letter-spacing:.15em;margin-bottom:1.2rem">Chibi / Mascot / Non-human / Mecha Design</p>
+      <p class="lead" style="max-width:55ch">SDキャラクター・マスコット・非人間（動物・虫・メカなど）のキャラクターデザイン。小さく表示しても伝わるシルエット設計、グッズ展開やアイコン化を想定したデザインに対応します。</p>
+    </div>
+    <!-- 001/004/068/086/092/093 から4枚: ゆるロボ/マスコット系 -->
+    <div class="g4 mb6 rev">
+      <div class="wi"><img src="img/img_001.jpg" alt="ゆるロボデザイン" loading="lazy"></div>
+      <div class="wi"><img src="img/img_004.jpg" alt="マスコットキャラクター" loading="lazy"></div>
+      <div class="wi"><img src="img/img_086.jpg" alt="SDキャラクター" loading="lazy"></div>
+      <div class="wi"><img src="img/img_092.jpg" alt="SDキャラクター" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="scope rev">
+    <div class="scope-lbl">担当可能範囲<br>Production Scope</div>
+    <div class="scope-items">
+      <div class="si">ヒロインデザイン・アニメ系</div>
+      <div class="si">衣装設計・武具・装飾設計</div>
+      <div class="si">表情差分・衣装差分・ポーズ差分</div>
+      <div class="si">歴史・ファンタジー系世界観設計</div>
+      <div class="si">SDキャラクター・マスコット</div>
+      <div class="si">非人間・メカ・クリーチャー設計</div>
+      <div class="si">体型差・年齢差・非定型体型表現</div>
+      <div class="si">赤入れ・品質調整・方向性提案</div>
+      <div class="si">グッズ・アイコン化を想定した設計</div>
+    </div>
+  </div>
+  <div class="sec-cta rev"><span class="sec-cta-txt">キャラクターデザインのご相談</span><a href="#contact" class="sec-cta-btn">Contact →</a></div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- GAME & PRODUCTION ART -->
+<section id="game-art" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 02</span>
+    <div><h2 class="st">Game &amp; Production Art</h2><p class="ss">Background / Effect / Card / Character / Stills / CG</p></div>
+  </div>
+
+  <!-- WIXOSS -->
+  <div class="mb48">
+    <div class="intro rev">
+      <div>
+        <span class="slb">Game IP Works — WIXOSS LAND</span>
+        <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-top:.5rem;margin-bottom:.5rem">商業ゲーム制作の基準理解<br>キャラ・背景・エフェクト横断</h3>
+        <p style="font-size:.7rem;color:var(--ash);letter-spacing:.12em;margin-bottom:1.2rem">株式会社ミモタイプ — スマートフォンゲーム</p>
+        <p class="lead">WIXOSS LAND -W.I.S.H. in- にて、キャラクターデザイン案・背景制作（約60点）・カードエフェクト・赤入れ・品質調整まで横断的に担当。世界観アートボード制作にも関わり、制作基準の理解と全体調整力を示す実績。</p>
+        <ul class="pts">
+          <li>商業ゲーム制作の基準理解</li>
+          <li>世界観アートボード・基準イラスト制作</li>
+          <li>背景・エフェクト・キャラを一人で横断対応</li>
+          <li>赤入れ・品質調整・外部制作物の補正統一</li>
+        </ul>
+      </div>
+      <div class="wi-d" style="aspect-ratio:1"><img src="img/img_099.jpg" alt="WIXOSS LANDカード" loading="lazy"></div>
+    </div>
+    <div class="g4 mb12 rev">
+      <div class="wi-d" style="aspect-ratio:1"><img src="img/img_096.jpg" alt="カードエフェクト" loading="lazy"></div>
+      <div class="wi-d" style="aspect-ratio:1"><img src="img/img_097.jpg" alt="カードエフェクト" loading="lazy"></div>
+      <div class="wi-d" style="aspect-ratio:1"><img src="img/img_020.jpg" alt="炎系エフェクト" loading="lazy"></div>
+      <div class="wi-d" style="aspect-ratio:1"><img src="img/img_030.jpg" alt="豪炎陣エフェクト" loading="lazy"></div>
+    </div>
+    <div class="ssub rev">背景制作 — 時間差分対応（昼・夕・夜）</div>
+    <div class="g3 mb6 rev">
+      <div class="wi-d"><img src="img/img_007.jpg" alt="カードショップ背景 昼" loading="lazy"></div>
+      <div class="wi-d"><img src="img/img_005.jpg" alt="カードショップ背景 夕方" loading="lazy"></div>
+      <div class="wi-d"><img src="img/img_006.jpg" alt="カードショップ背景 夜" loading="lazy"></div>
+    </div>
+    <p class="cap rev">カードショップ背景 / 昼・夕・夜差分（背景制作 約60点 / 時間差分・シーン差分対応）</p>
+  </div>
+
+  <!-- 病み彼女 -->
+  <div class="mb32">
+    <div class="intro rev">
+      <div>
+        <span class="slb">Mobile Game Works — 病み彼女これくしょん</span>
+        <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-top:.5rem;margin-bottom:.5rem">累計100万DL達成タイトル<br>キャラクター・スチル・エンディングCG</h3>
+        <p style="font-size:.7rem;color:var(--ash);letter-spacing:.12em;margin-bottom:1.2rem">メッセージアプリ風恋愛ゲーム</p>
+        <p class="lead">累計100万DLを達成したメッセージアプリ風恋愛ゲームにて、ゲーム内キャラクターイラスト・スチル・エンディングCGを担当。複数ヒロインの個性と感情変化を描き分けた実績。</p>
+        <ul class="pts">
+          <li>ゲーム内キャラクターイラスト</li>
+          <li>スチル・エンディングCG制作</li>
+          <li>複数ヒロインの個性づくりと感情描き分け</li>
+          <li>ハッピーエンド〜バッドエンドまでの演出</li>
+        </ul>
+      </div>
+      <div class="wi"><img src="img/img_104.jpg" alt="病み彼女これくしょん メインビジュアル" loading="lazy"></div>
+    </div>
+    <div class="g4 mb6 rev">
+      <div class="wi"><img src="img/img_026.png" alt="ゲーム内キャラクター一覧" loading="lazy"></div>
+      <div class="wi"><img src="img/img_032.webp" alt="キャラクターイラスト" loading="lazy"></div>
+      <div class="wi"><img src="img/img_036.webp" alt="エンディングCG" loading="lazy"></div>
+      <div class="wi"><img src="img/img_046.jpg" alt="バッドエンドCG" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="scope rev">
+    <div class="scope-lbl">担当可能範囲<br>Production Scope</div>
+    <div class="scope-items">
+      <div class="si">ゲーム用キャラクターイラスト</div>
+      <div class="si">スチル・エンディングCG制作</div>
+      <div class="si">背景制作・時間差分対応</div>
+      <div class="si">カードエフェクト制作</div>
+      <div class="si">バトルフィールド・演出背景</div>
+      <div class="si">世界観アートボード制作</div>
+      <div class="si">赤入れ・品質調整</div>
+      <div class="si">外部制作物の補正・統一</div>
+      <div class="si">アートディレクション補佐</div>
+    </div>
+  </div>
+  <div class="sec-cta rev"><span class="sec-cta-txt">Game Art のご相談</span><a href="#contact" class="sec-cta-btn">Contact →</a></div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- QUALITY CONTROL -->
+<section id="quality-control" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 03</span>
+    <div><h2 class="st">Quality Control</h2><p class="ss">Benchmark / AD Support / AI-assisted Production</p></div>
+  </div>
+
+  <!-- Hotdog Palace -->
+  <div class="mb48">
+    <div class="intro rev">
+      <div>
+        <span class="slb">Game Art Direction Support — Hotdog Palace</span>
+        <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-top:.5rem;margin-bottom:.5rem">ベンチマーク制作・品質基準づくり<br>キャラクター案・AD補佐</h3>
+        <p style="font-size:.7rem;color:var(--ash);letter-spacing:.12em;margin-bottom:1.2rem">スマートフォンゲーム — Game Art Direction Support</p>
+        <p class="lead">AI生成画像をそのまま使うのではなく、商業品質に整えるためのベンチマークイラストを制作。制作チームが品質基準として参照できる完成見本を作成し、キャラクター性・画面密度・仕上げ品質の調整、加筆修正、AD補佐に携わりました。</p>
+        <ul class="pts">
+          <li>ベンチマーク設計とAD補佐</li>
+          <li>量産時の品質基準となる完成見本の制作</li>
+          <li>属性・世界観に合わせたキャラクター案を提案</li>
+          <li>デザインバリエーション展開</li>
+          <li>加筆修正・品質調整に対応</li>
+        </ul>
+      </div>
+      <div class="wi"><img src="img/img_105.jpg" alt="Hotdog Palace ベンチマークイラスト" loading="lazy"></div>
+    </div>
+    <div class="g4 mb6 rev">
+      <div class="wi"><img src="img/img_087.jpg" alt="キャラクターデザイン案" loading="lazy"></div>
+      <div class="wi"><img src="img/img_061.jpg" alt="デザインバリエーション" loading="lazy"></div>
+      <div class="wi"><img src="img/img_062.jpg" alt="デザインバリエーション" loading="lazy"></div>
+      <div class="wi"><img src="img/img_063.jpg" alt="デザインバリエーション" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- AI Workflow -->
+  <div class="mb32">
+    <div class="rev" style="margin-bottom:1.8rem">
+      <span class="slb">AI-assisted Workflow</span>
+      <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);font-weight:200;line-height:1.1;margin-top:.5rem;margin-bottom:.6rem">生成AIを用いた構図検証と加筆調整</h3>
+      <p style="font-size:.7rem;color:var(--ash);letter-spacing:.12em;margin-bottom:1.2rem">Prompt / Rough Correction / Composite / Paint-over</p>
+      <p class="lead" style="max-width:65ch">生成AIによる初期案をもとに、衣装変更・ラフ修正・表情演出・背景生成・合成・加筆調整まで段階的に検証。AI出力をそのまま完成形とせず、目的に合わせて人の手で画面設計・キャラクター性・演出意図を調整するワークフローです。</p>
+    </div>
+    <p class="ai-note rev">※掲載画像は制作工程を説明するための検証用サンプルです。実案件画像ではありません。</p>
+    <div class="ai-steps rev">
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_050.png" alt="Step01 初期生成" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 01</div><div class="ai-ttl">初期生成</div><div class="ai-desc">短い指示から初期案を生成。画角と画面の方向性を作成。</div></div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_045.jpg" alt="Step02 衣装・役割調整" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 02</div><div class="ai-ttl">衣装・役割調整</div><div class="ai-desc">元の構図を活かしながら、役割や世界観が伝わるように衣装を変更。</div></div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_ai_step03_rough.png" alt="Step03 ラフ修正" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 03</div><div class="ai-ttl">ラフ修正</div><div class="ai-desc">顔立ちやニュアンスに違和感があったため、ラフで方向性を補正。キャラクター性・表情の印象を整理。</div></div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_053.png" alt="Step04 感情演出" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 04</div><div class="ai-ttl">感情演出</div><div class="ai-desc">焦りや緊張感が伝わるよう、表情・汚れ・ライティングを調整。</div></div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_054.png" alt="Step05 背景生成" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 05</div><div class="ai-ttl">背景生成</div><div class="ai-desc">演出背景を別途作成。場面の迫力と使いやすさを検証。</div></div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-img"><img src="img/img_052.jpg" alt="Step06 合成・加筆調整" loading="lazy"></div>
+        <div class="ai-step-body"><div class="ai-num">Step 06</div><div class="ai-ttl">合成・加筆調整</div><div class="ai-desc">キャラクターと背景を合成し、光・影・輪郭・汚れを手作業で加筆調整。画面全体の一体感を整える。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scope rev">
+    <div class="scope-lbl">担当可能範囲<br>QC / AI Scope</div>
+    <div class="scope-items">
+      <div class="si">ベンチマークイラスト設計</div>
+      <div class="si">品質基準づくり・AD補佐</div>
+      <div class="si">キャラクター案・デザイン提案</div>
+      <div class="si">プロンプト設計・生成結果の選定</div>
+      <div class="si">ラフ修正・キャラクター性補正</div>
+      <div class="si">加筆調整・合成・画面整理</div>
+      <div class="si">Stable Diffusion / ComfyUI</div>
+      <div class="si">LoRA設計・キャラクター再現性</div>
+      <div class="si">外部制作物の補正・統一</div>
+    </div>
+  </div>
+  <div class="sec-cta rev"><span class="sec-cta-txt">Quality Control / AI制作についてのご相談</span><a href="#contact" class="sec-cta-btn">Contact →</a></div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- IP / MEDIA EXPANSION -->
+<section id="ip-expansion" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 04</span>
+    <div><h2 class="st">IP / Media Expansion</h2><p class="ss">Music / Local IP / Goods / Event</p></div>
+  </div>
+
+  <!-- ミオヤマザキ -->
+  <div class="mb48">
+    <div class="ip-ph rev">
+      <span class="ip-kicker">Music Artist Official Visual Works</span>
+      <div><div class="ip-title">ミオヤマザキ — 公式ビジュアル制作</div><div class="ip-sub">FC限定盤「un-speakable」· グッズ · イベント会場装飾ビジュアル</div></div>
+    </div>
+    <div class="intro rev">
+      <div>
+        <p class="lead">ミオヤマザキの公式ビジュアル制作を担当。FC限定盤「un-speakable」のCDジャケット表紙・ブックレット用イラスト・関連グッズ・イベント会場装飾（Zepp Tokyo等）へ展開されたキャラクタービジュアルを一貫して制作しました。</p>
+        <ul class="pts">
+          <li>作品の顔となる公式ビジュアル制作</li>
+          <li>ブックレット・タオル・ネックストラップ・会場装飾への実物媒体展開</li>
+          <li>CDパッケージからライブ会場まで一貫した世界観設計</li>
+          <li>ファン体験につながるビジュアル制作</li>
+        </ul>
+      </div>
+      <!-- 見出し: CDジャケット img_016 -->
+      <div class="wi-p" style="aspect-ratio:3/4"><img src="img/img_016.jpg" alt="ミオヤマザキ CDジャケット表紙" loading="lazy"></div>
+    </div>
+    <!-- 補助: 055/056/057/073 -->
+    <div class="mio rev">
+      <div class="mio-c"><img src="img/img_055.jpg" alt="グッズ展開・会場写真" loading="lazy"></div>
+      <div class="mio-c"><img src="img/img_056.jpg" alt="ブックレット" loading="lazy"></div>
+      <div class="mio-c"><img src="img/img_057.jpg" alt="グッズ展開" loading="lazy"></div>
+    </div>
+    <div class="mio rev" style="margin-top:6px">
+      <div class="mio-c"><img src="img/img_058.jpg" alt="イベントビジュアル" loading="lazy"></div>
+      <div class="mio-c"><img src="img/img_073.jpg" alt="会場装飾" loading="lazy"></div>
+      <div class="mio-c" style="background:#f0f0ee"></div>
+    </div>
+  </div>
+
+  <!-- ご当地キャラ -->
+  <div class="mb32">
+    <div class="ip-ph rev">
+      <span class="ip-kicker">Local Mascot / Regional IP</span>
+      <div><div class="ip-title">ご当地キャラ / 地域IP展開</div><div class="ip-sub">地域キャラクター · 商品 · 販促ビジュアル制作</div></div>
+    </div>
+    <div class="intro rev">
+      <div>
+        <p class="lead">地域や商品に合わせたキャラクタービジュアル制作。食品パッケージ・グッズ・のぼり・冊子・CDなど実物媒体への展開、地域IPとして親しみやすく使いやすい絵柄設計。用途に合わせたSD化・表情差分・ポーズ差分にも対応します。</p>
+        <ul class="pts">
+          <li>地域・商品・媒体に合わせたIP展開力</li>
+          <li>商品化を意識した見せ方</li>
+          <li>のぼり・冊子・CD・掲示物への展開</li>
+          <li>視認性・再利用性の高い設計</li>
+        </ul>
+      </div>
+      <!-- 見出し: ロゴ入りメインビジュアル img_083 -->
+      <div class="wi"><img src="img/img_083.jpg" alt="明店街アカリ メインビジュアル" loading="lazy"></div>
+    </div>
+    <!-- 補助: 089/094/102 -->
+    <div class="local rev">
+      <div class="local-c"><img src="img/img_089.jpg" alt="地域キャラクター立ち絵" loading="lazy"></div>
+      <div class="local-c"><img src="img/img_094.jpg" alt="商品パッケージ" loading="lazy"></div>
+      <div class="local-c"><img src="img/img_102.jpeg" alt="グッズ展開" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="scope rev">
+    <div class="scope-lbl">担当可能範囲<br>IP Expansion Scope</div>
+    <div class="scope-items">
+      <div class="si">キャラクターIP設計・世界観構築</div>
+      <div class="si">CDジャケット・ブックレットビジュアル</div>
+      <div class="si">グッズ・商品展開用イラスト</div>
+      <div class="si">地域IP・ご当地キャラ制作</div>
+      <div class="si">のぼり・冊子・販促物展開</div>
+      <div class="si">SD化・表情差分・ポーズ差分</div>
+    </div>
+  </div>
+  <div class="sec-cta rev"><span class="sec-cta-txt">IP展開についてのご相談</span><a href="#contact" class="sec-cta-btn">Contact →</a></div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- BOOKS -->
+<section id="books" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 05</span>
+    <div><h2 class="st">Books / Educational Works</h2><p class="ss">双葉社 · 日本文芸社 · 汐文社 / 台湾翻訳版あり</p></div>
+  </div>
+  <p class="lead rev" style="max-width:70ch;margin-bottom:2.5rem">双葉社・日本文芸社・汐文社の3社で、著者・共著・イラスト担当として書籍制作に参加。技法書・マンガ制作解説書・児童向け英語教材など、目的に合わせた分かりやすいビジュアル制作に対応しています。台湾翻訳版あり。</p>
+  <div class="book-grid rev">
+    <div>
+      <div class="book-img"><img src="img/img_010.png" alt="筋肉描き分けテクニックBOOK" loading="lazy"></div>
+      <div class="book-title">ジャンル&amp;キャラクター別 筋肉描き分けテクニックBOOK</div>
+      <div class="book-pub">双葉社 / イラスト担当・共著 / 台湾翻訳版あり</div>
+    </div>
+    <div>
+      <div class="book-img"><img src="img/img_014.png" alt="CLIP STUDIO PAINT PRO" loading="lazy"></div>
+      <div class="book-title">プロの現場ですぐ使える CLIP STUDIO PAINT PRO</div>
+      <div class="book-pub">日本文芸社 / 共著（フサノ / 夕陽みか）</div>
+    </div>
+    <div>
+      <div class="book-img"><img src="img/img_011.png" alt="47都道府県 かんたん英語でふるさと紹介" loading="lazy"></div>
+      <div class="book-title">47都道府県 かんたん英語でふるさと紹介</div>
+      <div class="book-pub">汐文社 / シリーズ全3巻 イラスト担当</div>
+    </div>
+    <div>
+      <div class="book-img"><img src="img/img_080.jpg" alt="教材・中面イラスト例" loading="lazy"></div>
+      <div class="book-title">教材用イラスト / 解説ビジュアル</div>
+      <div class="book-pub">書籍・教材向けキャラクター・中面カット</div>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- TOOLS -->
+<section id="tools" class="sp">
+  <div class="sh rev">
+    <span class="sn">— 06</span>
+    <div><h2 class="st">Tools / Production Environment</h2><p class="ss">Digital Illustration / AI-assisted Workflow / Production Support</p></div>
+  </div>
+  <div class="tools-grid rev">
+    <div class="tool-card">
+      <div class="tool-head">1. Main Illustration Tools</div>
+      <div class="tool-item"><div class="tool-name">CLIP STUDIO PAINT</div><div class="tool-desc">キャラクターイラスト、線画、塗り、漫画・教材向け制作、レイヤー分け</div></div>
+      <div class="tool-item"><div class="tool-name">Adobe Photoshop</div><div class="tool-desc">画像調整、合成、仕上げ、色味調整、書き出し、商業データ調整</div></div>
+      <div class="tool-item"><div class="tool-name">Adobe Illustrator</div><div class="tool-desc">簡易レイアウト、ロゴ・ベクター要素調整、入稿用補助作業</div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">2. AI-assisted Workflow</div>
+      <div class="tool-item"><div class="tool-name">Stable Diffusion / ComfyUI</div><div class="tool-desc">構図検証、ビジュアル案の比較、素材生成の検証</div></div>
+      <div class="tool-item"><div class="tool-name">LoRA関連</div><div class="tool-desc">学習用素材の考え方、キャラクター再現性、出力傾向の把握</div></div>
+      <div class="tool-item"><div class="tool-name">実務対応</div><div class="tool-desc">AI出力の取捨選択と加筆修正 / 差分管理・品質調整 / 商業案件向けフロー対応</div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-head">3. Production Support</div>
+      <div class="tool-item"><div class="tool-name">対応可能なデータ納品形式</div></div>
+      <div class="tool-tags">
+        <span class="tool-tag">PSD</span><span class="tool-tag">CLIP</span><span class="tool-tag">PNG</span><span class="tool-tag">JPEG</span>
+        <span class="tool-tag">レイヤー分けデータ</span><span class="tool-tag">差分データ</span><span class="tool-tag">Web・SNS・印刷用書き出し</span>
+      </div>
+      <div class="tool-item" style="margin-top:1rem"><div class="tool-name">制作サポート</div><div class="tool-desc">Live2D向けパーツ分け / 差分制作（表情・衣装・時間・背景）/ 赤入れ・品質調整 / 共同制作向けレイヤー整理 / アートディレクション補佐</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="sp">
+  <div class="sh rev">
+    <span class="sn">— Contact</span>
+    <div><h2 class="st">稼働条件 · 連絡先</h2><p class="ss">Work Availability / Production Scope / Contact</p></div>
+  </div>
+  <div class="contact-wrap rev">
+    <div>
+      <p class="lead">キャラクターデザイン・ゲーム向けイラスト・IP・版権ビジュアル・AI補助ワークフロー・書籍・教材イラストなど、案件目的に合わせた制作に対応しています。商業案件・業務委託・継続制作のご相談が可能です。</p>
+      <p style="font-size:.72rem;color:var(--ash);line-height:1.8;margin-bottom:1.8rem">制作内容・使用媒体・点数・希望納期・ご予算感をご記載いただけると確認がスムーズです。</p>
+      <div class="c-links">
+        <a href="mailto:fq53fusano@gmail.com" class="c-link"><span class="c-lbl">Mail</span>fq53fusano@gmail.com</a>
+        <a href="https://x.com/rectsxux" target="_blank" rel="noopener" class="c-link"><span class="c-lbl">X / SNS</span>https://x.com/rectsxux</a>
+        <a href="https://skeb.jp" target="_blank" rel="noopener" class="c-link"><span class="c-lbl">Skeb</span>Skeb でのご依頼も受付中</a>
+      </div>
+      <p style="font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash);margin-bottom:.8rem;margin-top:1.8rem">Workflow / 制作フロー</p>
+      <div class="wf-step"><div class="wf-n">1</div><div class="wf-t">ご相談・仕様確認</div></div>
+      <div class="wf-step"><div class="wf-n">2</div><div class="wf-t">ラフ・方向性確認</div></div>
+      <div class="wf-step"><div class="wf-n">3</div><div class="wf-t">線画・着彩・差分制作</div></div>
+      <div class="wf-step"><div class="wf-n">4</div><div class="wf-t">監修・修正対応</div></div>
+      <div class="wf-step"><div class="wf-n">5</div><div class="wf-t">最終調整・納品</div></div>
+    </div>
+    <div class="avail">
+      <div class="avail-h">Availability / 稼働条件</div>
+      <div class="avail-items">
+        <div class="avail-item">業務委託・単発案件・継続案件のご相談可</div>
+        <div class="avail-item">フルリモートでの対応を基本としています</div>
+        <div class="avail-item">制作内容・点数・スケジュールに応じて個別相談</div>
+        <div class="avail-item">守秘義務のある案件にも配慮</div>
+        <div class="avail-item">商業利用前提の制作に対応</div>
+        <div class="avail-item">納品形式は案件仕様に合わせて調整</div>
+      </div>
+      <div style="margin-top:1.5rem;padding-top:1.3rem;border-top:1px solid var(--line)">
+        <p style="font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);margin-bottom:.7rem">Deliverables / 納品形式</p>
+        <div class="deliv">
+          <span class="deliv-tag">PSD</span><span class="deliv-tag">CLIP</span><span class="deliv-tag">PNG</span>
+          <span class="deliv-tag">JPEG</span><span class="deliv-tag">レイヤー分けデータ</span>
+          <span class="deliv-tag">差分データ</span><span class="deliv-tag">Web・SNS・印刷用書き出し</span>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;padding-top:1.3rem;border-top:1px solid var(--line)">
+        <p style="font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);margin-bottom:.7rem">Profile Summary</p>
+        <p style="font-size:.76rem;color:#555;line-height:1.8">Freelance Illustrator / Character Designer<br>フリーランス活動歴 約15年<br><br>商業ゲーム・スマートフォンアプリ・書籍・地域IP・音楽関連ビジュアル・AI補助制作ワークフローなどに対応。キャラクター設計・世界観整理・媒体展開・品質調整を含む制作を行っています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding:1.6rem var(--pad);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+  <span style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ash)">Fusano — Illustrator / Character Designer</span>
+  <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+    <a href="ai-policy.html" style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash2);transition:color .2s" onmouseover="this.style.color='var(--ash)'" onmouseout="this.style.color='var(--ash2)'">AI利用ポリシー</a>
+    <span style="font-size:.6rem;color:var(--ash2)">fq53fusano@gmail.com</span>
+  </div>
+</footer>
+
+<script>
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('on'); });
+}, { threshold:.05, rootMargin:'0px 0px -20px 0px' });
+document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+
+const hb = document.querySelector('.nav-hb');
+const nl = document.querySelector('.nav-links');
+let open = false;
+hb.addEventListener('click', () => {
+  open = !open;
+  if(open){
+    Object.assign(nl.style,{display:'flex',flexDirection:'column',position:'fixed',top:'var(--nav-h)',left:'0',right:'0',background:'rgba(255,255,255,.97)',padding:'2rem',gap:'1.5rem',borderBottom:'1px solid #e8e8e8',backdropFilter:'blur(10px)',zIndex:'199'});
+  } else { nl.removeAttribute('style'); }
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => { open=false; nl.removeAttribute('style'); });
+});
+</script>
+</body>
+</html>

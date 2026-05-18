@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusano / フサノ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111;--paper:#fff;--ash:#888;--ash2:#bbb;--line:#e8e8e8;
+  --bg-w:#f7f7f5;--neon:#c5e821;--neon2:#a8d000;
+  --sans:'Jost','Noto Sans JP',sans-serif;
+  --nav-h:64px;--pad:3rem
+}
+html{scroll-behavior:smooth;height:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{
+  height:var(--nav-h);display:flex;align-items:center;
+  justify-content:space-between;padding:0 var(--pad);
+  border-bottom:1px solid var(--line);
+  flex-shrink:0;
+}
+.nav-logo{font-size:.75rem;letter-spacing:.4em;font-weight:500;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-right a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);transition:color .2s}
+.nav-right a:hover{color:var(--ink)}
+
+/* MAIN */
+main{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:4rem var(--pad);
+}
+
+/* HERO TEXT */
+.hub-hero{text-align:center;margin-bottom:4.5rem}
+.hub-kicker{
+  font-size:.6rem;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--ash);margin-bottom:1.5rem;
+}
+.hub-name{
+  font-size:clamp(2.5rem,7vw,5rem);
+  font-weight:200;letter-spacing:-.02em;line-height:1;
+  margin-bottom:.4rem;
+}
+.hub-name-ja{
+  font-size:clamp(.85rem,1.8vw,1.1rem);
+  color:var(--ash);letter-spacing:.25em;
+  margin-bottom:2rem;
+}
+.hub-desc{
+  font-size:clamp(.78rem,1.2vw,.88rem);
+  line-height:1.9;color:#555;
+  max-width:36ch;margin:0 auto;
+}
+
+/* 3 CARDS */
+.hub-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  width:100%;
+  max-width:900px;
+  border:1px solid var(--line);
+}
+
+.hub-card{
+  position:relative;
+  padding:2.5rem 2rem 3rem;
+  background:var(--paper);
+  transition:background .25s;
+  display:flex;flex-direction:column;
+}
+.hub-card:hover{background:var(--bg-w)}
+.hub-card.coming{cursor:default}
+.hub-card.coming:hover{background:var(--paper)}
+
+/* カード内部 */
+.hc-num{
+  font-size:.55rem;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--ash2);
+  margin-bottom:1.5rem;
+}
+.hc-title{
+  font-size:1.1rem;font-weight:400;
+  letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:.4rem;
+}
+.hc-title-ja{
+  font-size:.72rem;color:var(--ash);
+  letter-spacing:.12em;margin-bottom:1.4rem;
+}
+.hc-desc{
+  font-size:.76rem;line-height:1.75;
+  color:#555;flex:1;
+}
+.hc-tags{
+  display:flex;flex-wrap:wrap;gap:.35rem;
+  margin-top:1.2rem;
+}
+.hc-tag{
+  font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.18rem .45rem;border:1px solid var(--line);color:var(--ash2);
+}
+.hc-link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ash);margin-top:2rem;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+  align-self:flex-start;
+}
+.hc-link:hover{color:var(--ink);border-color:var(--ink)}
+.hc-link::after{content:'→';font-size:.65rem}
+.hc-link.external::after{content:'↗';font-size:.65rem}
+
+/* Coming soon badge */
+.coming-badge{
+  display:inline-flex;align-items:center;
+  font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ash2);margin-top:2rem;gap:.4rem;
+}
+.coming-badge::before{
+  content:'';display:block;width:6px;height:6px;
+  border-radius:50%;background:var(--ash2);
+}
+
+/* Works カードにアクセント */
+.hub-card.works .hc-num{color:var(--neon2)}
+
+/* FOOTER */
+footer{
+  padding:1.5rem var(--pad);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+  flex-shrink:0;
+}
+.footer-links{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.footer-links a{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash2);transition:color .2s}
+.footer-links a:hover{color:var(--ash)}
+.footer-note{font-size:.58rem;color:var(--ash2)}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+.rev.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}
+
+/* MOBILE */
+@media(max-width:800px){
+  :root{--pad:1.5rem}
+  .hub-cards{grid-template-columns:1fr;max-width:480px}
+  .hub-card{padding:2rem 1.8rem 2.5rem}
+  main{padding:3rem var(--pad)}
+  .hub-hero{margin-bottom:3rem}
+}
+@media(max-width:480px){
+  :root{--nav-h:56px}
+  .nav-right{gap:1.2rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .rev{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Fusano</div>
+  <div class="nav-right">
+    <a href="works.html">Works</a>
+    <a href="https://ichi-dun.vercel.app" target="_blank" rel="noopener">Ichi</a>
+    <a href="works.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- Hero -->
+  <div class="hub-hero rev">
+    <p class="hub-kicker">Illustrator / Character Designer</p>
+    <h1 class="hub-name">Fusano</h1>
+    <p class="hub-name-ja">フサノ</p>
+    <p class="hub-desc">キャラクター制作、一次創作IP、思考アーカイブを行き来しながら、絵・世界観・アイデアを制作しています。</p>
+  </div>
+
+  <!-- 3 Cards -->
+  <div class="hub-cards">
+
+    <!-- Works -->
+    <a href="works.html" class="hub-card works rev d1">
+      <div class="hc-num">01</div>
+      <div class="hc-title">Works</div>
+      <div class="hc-title-ja">お仕事実績 / 商業ポートフォリオ</div>
+      <div class="hc-desc">キャラクターデザイン、ゲーム素材、品質調整、IP展開、書籍実績など、商業制作の実績をまとめています。</div>
+      <div class="hc-tags">
+        <span class="hc-tag">Character Design</span>
+        <span class="hc-tag">Game Art</span>
+        <span class="hc-tag">IP Expansion</span>
+        <span class="hc-tag">Quality Control</span>
+      </div>
+      <span class="hc-link">ポートフォリオを見る</span>
+    </a>
+
+    <!-- Sociality, Very Ant. -->
+    <div class="hub-card coming rev d2">
+      <div class="hc-num">02</div>
+      <div class="hc-title">Sociality,<br>Very Ant.</div>
+      <div class="hc-title-ja">社会性ありあり〼 / 一次創作IP</div>
+      <div class="hc-desc">アリの生態・社会性・巣の構造をもとにした一次創作IP。種ごとのキャラクターデザイン、世界観、ARICO（構築言語）、祭事、生態資料を継続制作中。</div>
+      <div class="hc-tags">
+        <span class="hc-tag">Original IP</span>
+        <span class="hc-tag">Worldbuilding</span>
+        <span class="hc-tag">ARICO</span>
+      </div>
+      <span class="coming-badge">Coming soon</span>
+    </div>
+
+    <!-- Ichi -->
+    <a href="https://ichi-dun.vercel.app" target="_blank" rel="noopener" class="hub-card rev d3">
+      <div class="hc-num">03</div>
+      <div class="hc-title">一 / Ichi</div>
+      <div class="hc-title-ja">思考アーカイブ / メモアプリ</div>
+      <div class="hc-desc">制作前の構想、思想の断片、AIとの対話から生まれるアイデアなどを置く場所。リアルタイムメモアプリとして公開中。</div>
+      <div class="hc-tags">
+        <span class="hc-tag">Thinking Archive</span>
+        <span class="hc-tag">Notes</span>
+        <span class="hc-tag">Ideas</span>
+      </div>
+      <span class="hc-link external">Ichi を開く</span>
+    </a>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="works.html">Works</a>
+    <a href="works.html#contact">Contact</a>
+    <a href="ai-policy.html">AI利用ポリシー</a>
+    <a href="https://ichi-dun.vercel.app" target="_blank" rel="noopener">Ichi ↗</a>
+  </div>
+  <span class="footer-note">fq53fusano@gmail.com</span>
+</footer>
+
+<script>
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('on'); });
+}, { threshold:.08 });
+document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+</script>
+
+</body>
+</html>
